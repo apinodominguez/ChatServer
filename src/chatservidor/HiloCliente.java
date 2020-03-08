@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.LinkedList;
+import javax.swing.JOptionPane;
 
 public class HiloCliente extends Thread{
     private final Socket socket;      
@@ -13,7 +14,9 @@ public class HiloCliente extends Thread{
     private ObjectInputStream objectInputStream;                    
     private final Servidor server;
     private String identificador;
+    private int numCon = 0;
     private boolean escuchando;
+   
     
     public HiloCliente(Socket socket,Servidor server) {
         
@@ -94,6 +97,10 @@ public class HiloCliente extends Thread{
     
     private void confirmarConexion(String identificador) {
         Servidor.correlativo++;
+        if (Servidor.correlativo > 10){
+            JOptionPane.showMessageDialog(null,"Ya hay diez conexiones");
+        }
+        else{
         this.identificador=Servidor.correlativo+" - "+identificador;
         LinkedList<String> lista=new LinkedList<>();
         lista.add("CONEXION_ACEPTADA");
@@ -108,6 +115,7 @@ public class HiloCliente extends Thread{
                 .stream()
                 .forEach(cliente -> cliente.enviarMensaje(auxLista));
         server.clientes.add(this);
+        }
     }
    
     public String getIdentificador() {

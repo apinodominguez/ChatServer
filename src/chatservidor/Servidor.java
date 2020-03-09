@@ -12,6 +12,7 @@ public class Servidor extends Thread{
     private final VentanaS ventana;
     private final String puerto;
     static int correlativo;
+    static boolean full;
  
     public Servidor(String puerto, VentanaS ventana) {
         correlativo=0;

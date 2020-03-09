@@ -98,7 +98,7 @@ public class HiloCliente extends Thread{
     private void confirmarConexion(String identificador) {
         Servidor.correlativo++;
         if (Servidor.correlativo > 10){
-            JOptionPane.showMessageDialog(null,"Ya hay diez conexiones");
+            desconnectar();
         }
         else{
         this.identificador=Servidor.correlativo+" - "+identificador;
@@ -137,5 +137,6 @@ public class HiloCliente extends Thread{
         server.clientes
                 .stream()
                 .forEach(h -> h.enviarMensaje(auxLista));        
+        
     }
 }
